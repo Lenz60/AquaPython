@@ -273,6 +273,7 @@ def recommend_plants():
                     plants["foreground"] = lowTecForeround
                     plants["midground"] = lowTecMidground
                     plants["background"] = lowTecBackground
+                    pass
         case "medium":
             match recomendedDisplay['styleCode']:
                 case 1:
@@ -295,6 +296,7 @@ def recommend_plants():
                     plants["foreground"] = mediumTecForeground
                     plants["midground"] = mediumTecMidground
                     plants["background"] = mediumTecBackground
+                    pass
         case "high":
             match recomendedDisplay['styleCode']:
                 case 1:
@@ -317,6 +319,7 @@ def recommend_plants():
                     plants["foreground"] = highTecForeground
                     plants["midground"] = highTecMidground
                     plants["background"] = highTecBackground
+                    pass
         case _:
             plants["foreground"] = mediumTecForeground
             plants["midground"] = mediumTecMidground
@@ -338,12 +341,21 @@ def loop_substrate(substrate):
     print("Recomended substrate for your tank :")
     for sub in substrate:
         print(f"  - {sub}")
-        
+    
 def check_co2(co2):
     if co2:
         print("Your tank require CO2 injection")
     else:
         print("Your tank can survive without CO2 injection")
+
+def level_scape(spec,substrate):
+    # v Logical Operator
+    if(spec == "high" or spec == "medium"):
+        print("Your scape is a high tech scape")
+    elif(spec == "medium" and "soil" in substrate):
+        print("Your scape is a medium to high tech scape")
+    else:
+        print("Your scape is a low to medium tech scape")
         
 def display_recommendation():
     calculate_specs()
@@ -355,6 +367,7 @@ def display_recommendation():
     # print(f"Your tank will require {recomendedDisplay['light']} watts of light")
     print(f"Your tank will require {recomendedDisplay['lightwplitre']} watts of light per litre")
     print(f"Your tank will require {recomendedDisplay['lightlplitre']} lumen of light per litre")
+    level_scape(recomendedDisplay['spec'],recomendedDisplay['substrate'])
     check_co2(recomendedDisplay['co2'])
     print(f"{'-'*30}")
     loop_substrate(recomendedDisplay['substrate'])
