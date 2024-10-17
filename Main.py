@@ -20,7 +20,8 @@ def loop_style():
         length+=1
     
 
-os.system("cls")
+# os.system("cls")
+print(f"{'='*30}")
 print("Welcome to Aquascape Specification Calculator")
 print(f"{'='*30}")
 loop_tank()

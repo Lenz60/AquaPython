@@ -2,7 +2,7 @@
 # ? Dictionary
 tankSpec = {
     "size": "30W",
-    "type": "large"
+    "volume": 1000
 }
 
 recPlants = {
@@ -26,13 +26,30 @@ plantSpec = {
     "spec": "high"
 }
 
+# v Float
+lightWattPLiter = {
+    "low": 0.3,
+    "medium": 0.5,
+    "high": 1
+}
+
+lightLumensPLiter ={
+    "low": 25,
+    "medium": 50,
+    "high": 100
+}
+
+# 
 recomendedDisplay = {
     "tankSize": "",
+    "volume": 0,
     "styleCode": 0,
     "selectedStyle": "",
     "spec": "",
     "substrate": "",
     "light": 0,
+    "lightwplitre": 0,
+    "lightlplitre": 0,
     "co2": False,
     "foreground": [],
     "midground": [],
@@ -75,25 +92,25 @@ def proceed_tank_choice():
         match tank_choice:
             case "1":
                 tank["size"] = "30W"
-                tank["type"] = "small"
+                tank["volume"] = 12.96
             case "2":
                 tank["size"] = "45P"
-                tank["type"] = "medium"
+                tank["volume"] = 36.45
             case "3":
                 tank["size"] = "60P"
-                tank["type"] = "medium"
+                tank["volume"] = 64.80
             case "4":
                 tank["size"] = "75P"
-                tank["type"] = "large"
+                tank["volume"] = 151.87
             case "5":
                 tank["size"] = "90P"
-                tank["type"] = "large"
+                tank["volume"] = 182.25
             case _:
                 print("Invalid choice. Please enter a number between 1 and 5.")
                 continue  # Continue the loop to prompt again
         break 
     
-    recomendedDisplay.update({"tankSize": tank["size"]})
+    recomendedDisplay.update({"tankSize": tank["size"], "volume": tank["volume"]})
 
 
 def proceed_style_choice():
@@ -124,6 +141,7 @@ def proceed_style_choice():
 def calculate_specs():
     needs = dict.fromkeys(plantNeeds)
     spec = dict.fromkeys(plantSpec)
+    # wplitre = 0
     # v S̶w̶i̶t̶c̶h̶  match case
     match recomendedDisplay['tankSize']:
         case "30W":
@@ -133,71 +151,101 @@ def calculate_specs():
                     spec['spec'] = "high"
                     needs["co2"] = True
                     needs['light'] = lightData[0]*3
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["high"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["high"]
                 case 2:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[0]*2
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
                 case _:
                     needs["co2"] = False
                     spec['spec'] = "low"
                     needs['light'] = lightData[0]
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["low"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["low"]
         case "45P":
             match recomendedDisplay['styleCode']:
                 case 1:
                     spec['spec'] = "high"
                     needs["co2"] = True
                     needs['light'] = lightData[1]*3
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["high"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["high"]
                 case 2:
                     needs["co2"] = True
                     spec['spec'] = "high"
                     needs['light'] = lightData[1]*2
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
                 case _:
                     needs["co2"] = False
                     spec['spec'] = "low"
                     needs['light'] = lightData[1]
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["low"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["low"]
         case "60P":
             match recomendedDisplay['styleCode']:
                 case 1:
                     needs["co2"] = True
                     spec['spec'] = "high"
                     needs['light'] = lightData[2]*3
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["high"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["high"]
                 case 2:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[2]*2
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
                 case _:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[2]
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
         case "75P":
             match recomendedDisplay['styleCode']:
                 case 1:
                     needs["co2"] = True
                     spec['spec'] = "high"
                     needs['light'] = lightData[3]*3
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["high"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["high"]
                 case 2:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[3]*2
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
                 case _:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[3]
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
         case "90P":
             match recomendedDisplay['styleCode']:
                 case 1:
                     needs["co2"] = True
                     spec['spec'] = "high"
                     needs['light'] = lightData[4]*3
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["high"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["high"]
                 case 2:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[4]*2
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
                 case _:
                     needs["co2"] = True
                     spec['spec'] = "medium"
                     needs['light'] = lightData[4]
-    recomendedDisplay.update({"spec": spec['spec'], "light": needs['light'], "co2": needs['co2']})                
+                    wplitre = recomendedDisplay['volume']*lightWattPLiter["medium"]
+                    lplitre = recomendedDisplay['volume']*lightLumensPLiter["medium"]
+    recomendedDisplay.update({"spec": spec['spec'], "light": needs['light'], "lightwplitre": round(wplitre,2), "lightlplitre": round(lplitre,2), "co2": needs['co2']})                
 
 def recommend_plants():
     plants = dict.fromkeys(recPlants)
@@ -304,7 +352,9 @@ def display_recommendation():
     print(f"{'='*50}")
     print(f"Your tank is a {recomendedDisplay['tankSize']} tank")
     print(f"Your style choice is {recomendedDisplay['selectedStyle']}")
-    print(f"Your tank will require {recomendedDisplay['light']} watts of light")
+    # print(f"Your tank will require {recomendedDisplay['light']} watts of light")
+    print(f"Your tank will require {recomendedDisplay['lightwplitre']} watts of light per litre")
+    print(f"Your tank will require {recomendedDisplay['lightlplitre']} lumen of light per litre")
     check_co2(recomendedDisplay['co2'])
     print(f"{'-'*30}")
     loop_substrate(recomendedDisplay['substrate'])
